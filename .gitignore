@@ -1,0 +1,18 @@
+# Local configuration and secrets
+.env
+!.env.example
+
+# Build output
+backend/target/
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Local task state
+.opencode/

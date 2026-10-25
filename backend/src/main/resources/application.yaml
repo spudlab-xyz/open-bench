@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: openbench
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      initialization-fail-timeout: 1
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  sql:
+    init:
+      mode: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-components: never
+      show-details: never
+
+server:
+  shutdown: graceful

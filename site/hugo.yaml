@@ -1,0 +1,59 @@
+baseURL: /
+languageCode: en-gb
+title: OpenBench
+theme: spudlab-project-theme
+enableRobotsTXT: true
+
+menus:
+  main:
+    - name: Features
+      url: /#features-title
+      weight: 10
+    - name: Documentation
+      pageRef: /docs
+      weight: 20
+    - name: Project status
+      pageRef: /about
+      weight: 30
+  footer:
+    - name: Documentation
+      pageRef: /docs
+      weight: 10
+    - name: Project status
+      pageRef: /about
+      weight: 20
+
+params:
+  brandName: OpenBench
+  description: Plan experiments, capture measurements, and understand results in a browser-based scientific workspace.
+  author: SpudLab
+  logo: images/openbench-mark.svg
+  favicon: images/openbench-mark.svg
+  socialImage: images/openbench-mark.svg
+  dateFormat: 2 January 2006
+  showTableOfContents: true
+  themeToggle: true
+  copyright: SpudLab
+
+  madeBy:
+    label: Made by
+    name: SpudLab
+    url: https://spudlab.xyz/
+
+  headerAction:
+    label: Get started
+    url: docs/getting-started/
+
+  colors:
+    dark: "#373b3e"
+    neutral: "#bec8d1"
+    accent: "#86cecb"
+    support: "#137a7f"
+    emphasis: "#e12885"
+
+  footer:
+    description: OpenBench is a planned single-user scientific experiment tracker and analyser. The current application is an interactive, browser-local prototype.
+
+  links:
+    - name: SpudLab
+      url: https://spudlab.xyz/
