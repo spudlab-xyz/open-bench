@@ -1,4 +1,4 @@
-import { Beaker, ChevronLeft, ChevronRight, FlaskConical, FolderKanban, Home, Menu } from 'lucide-react';
+import { ChevronLeft, ChevronRight, FlaskConical, FolderKanban, Home, Menu } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useWorkspace } from '../context/WorkspaceContext';
@@ -17,7 +17,7 @@ export function AppShell() {
   return <div className={`app-shell ${collapsed ? 'nav-collapsed' : ''}`}>
     <button className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Open navigation"><Menu /></button>
     <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
-      <div className="brand-lockup"><span className="brand-mark"><Beaker /></span><span className="brand-text">OpenBench<small>by SpudLab</small></span><button className="sidebar-toggle icon-button" onClick={() => setCollapsed((value) => !value)} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} title={collapsed ? 'Expand navigation' : 'Collapse navigation'}>{collapsed ? <ChevronRight /> : <ChevronLeft />}</button></div>
+      <div className="brand-lockup"><span className="brand-mark"><img src="/images/openbench-mark.svg" alt="" /></span><span className="brand-text">OpenBench<small>by SpudLab</small></span><button className="sidebar-toggle icon-button" onClick={() => setCollapsed((value) => !value)} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} title={collapsed ? 'Expand navigation' : 'Collapse navigation'}>{collapsed ? <ChevronRight /> : <ChevronLeft />}</button></div>
       <nav aria-label="Primary navigation">
         {navigation.map(({ to, label, icon: Icon, end }) => <NavLink key={to} to={to} end={end} onClick={() => setMobileOpen(false)} title={collapsed ? label : undefined}><Icon /><span>{label}</span></NavLink>)}
       </nav>

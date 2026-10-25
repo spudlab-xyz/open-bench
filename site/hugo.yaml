@@ -38,7 +38,7 @@ params:
   madeBy:
     label: Made by
     name: SpudLab
-    url: https://spudlab.xyz/
+    url: https://spudlab-xyz.github.io/
 
   headerAction:
     label: Get started
@@ -55,5 +55,7 @@ params:
     description: OpenBench is a planned single-user scientific experiment tracker and analyser. The current application is an interactive, browser-local prototype.
 
   links:
+    - name: GitHub
+      url: https:/github.com/spudlab-xyz
     - name: SpudLab
-      url: https://spudlab.xyz/
+      url: https://spudlab-xyz.github.io/
