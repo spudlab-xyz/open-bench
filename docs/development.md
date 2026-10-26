@@ -23,6 +23,10 @@ Prototype records are kept in IndexedDB for the current origin. Vite and the Doc
 therefore use separate browser workspaces. Export an experiment as JSON when moving between origins;
 plain JSON includes attachment metadata but not attachment bytes.
 
+Experiment JSON exports contain the current experiment snapshot, not the workspace-wide version
+ledger. When changing persistence code, preserve version snapshots and deletion tombstones, require
+explicit units, and reject imported date-times that do not carry a UTC offset or `Z` suffix.
+
 ## Backend
 
 The backend requires Java 25. Use the committed Maven Wrapper so every environment uses Maven

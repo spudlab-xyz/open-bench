@@ -40,9 +40,16 @@ A healthy response reports a status of `UP`. Nginx proxies this exact path to th
 
 ## Explore the seeded workspace
 
-The prototype creates three deterministic experiments on first use. Browse their projects,
+The prototype creates four deterministic experiments on first use. Browse their projects,
 specimens, method revisions, runs, measurements, analyses, and reports, or create a separate
 experiment. Changes persist in IndexedDB for this browser and origin.
+
+Continue with the illustrated [Guided journeys](../../using-openbench/guided-journeys/) or look up a
+form in the [Field reference](../../using-openbench/field-reference/).
+
+Before choosing a long-term browser profile, read the
+[browser and accessibility guidance](../../using-openbench/task-guides/browser-and-accessibility/)
+and [data storage and safety](../../using-openbench/data-safety/) pages.
 
 ## Stop the stack
 

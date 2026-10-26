@@ -34,6 +34,10 @@ params:
   showTableOfContents: true
   themeToggle: true
   copyright: SpudLab
+  customCSS:
+    - css/docs-lightbox.css
+  customJS:
+    - js/docs-lightbox.js
 
   madeBy:
     label: Made by

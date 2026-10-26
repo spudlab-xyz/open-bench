@@ -64,11 +64,20 @@ export function reviseMeasurement(
       }
     });
     const revisions = measurement.revisions ?? [];
+    const affectedAnalysisIds = experiment.analyses
+      .filter((analysis) => !analysis.includedMeasurementIds?.length || analysis.includedMeasurementIds.includes(measurement.id))
+      .map((analysis) => analysis.id);
+    const valueMetadata = { ...(measurement.valueMetadata ?? {}) };
+    changedVariables.forEach((variableId) => {
+      valueMetadata[variableId] = { ...(valueMetadata[variableId] ?? { kind: 'raw-observation' }), kind: 'corrected-observation' };
+    });
     return {
       ...measurement,
       values: { ...after.values },
       quality: after.quality,
+      qualityReason: before.quality !== after.quality ? reason.trim() : measurement.qualityReason,
       notes: after.notes,
+      valueMetadata,
       corrections,
       revisions: [...revisions, {
         id: `measurement-revision-${measurement.id}-${revisions.length + 1}`,
@@ -77,6 +86,8 @@ export function reviseMeasurement(
         timestamp,
         before,
         after,
+        affectedAnalysisIds,
+        affectedConclusion: Boolean(experiment.conclusion),
       }],
     };
   });

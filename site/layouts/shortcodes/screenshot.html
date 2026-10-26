@@ -1,0 +1,13 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" -}}
+{{- $caption := .Get "caption" -}}
+{{- $resource := .Page.Resources.GetMatch $src -}}
+{{- if not $resource -}}
+  {{- errorf "Screenshot resource %q was not found in page bundle %s" $src .Page.File.Path -}}
+{{- end -}}
+<figure class="docs-screenshot">
+  <a href="{{ $resource.RelPermalink }}" class="docs-screenshot-trigger" data-lightbox-image data-lightbox-caption="{{ $caption }}" aria-label="Enlarge image: {{ $alt }}">
+    <img src="{{ $resource.RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+  </a>
+  {{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>

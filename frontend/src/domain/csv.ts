@@ -1,5 +1,6 @@
 import Papa from 'papaparse';
 import type { Experiment, Measurement } from '../types';
+import { ELAPSED_TIME_UNIT } from '../utils/units';
 
 export interface CsvMapping {
   specimen: string;
@@ -43,7 +44,7 @@ export function previewCsv(experiment: Experiment, rows: Record<string, string>[
       else observedAt = pointText;
     } else {
       elapsed = Number(pointText);
-      if (!Number.isFinite(elapsed) || elapsed < 0) issues.push('Elapsed time must be a non-negative number.');
+      if (!Number.isFinite(elapsed) || elapsed < 0) issues.push(`Elapsed time must be a non-negative number in ${ELAPSED_TIME_UNIT}.`);
     }
     if (specimen && run && experiment.measurements.some((measurement) => measurement.specimenId === specimen.id && measurement.runId === run.id && (experiment.kind === 'plant' ? measurement.observedAt === observedAt : measurement.elapsed === elapsed))) {
       issues.push('A reading already exists for this specimen, run and time/date. Existing readings are never overwritten.');
@@ -64,7 +65,7 @@ export function measurementsToCsv(experiment: Experiment): string {
     const condition = experiment.conditions.find((item) => item.id === measurement.conditionId);
     return Object.fromEntries([
       ['measurement_id', measurement.id], ['condition', condition?.name ?? ''], ['specimen', specimen?.name ?? ''], ['run', run?.name ?? ''],
-      ['elapsed_or_date', measurement.elapsed ?? measurement.observedAt ?? ''], ...experiment.variables.flatMap((variable) => [[variable.name, measurement.values[variable.id] ?? ''], [`${variable.name}_unit`, variable.unit]]),
+      ['elapsed_time', measurement.elapsed ?? ''], ['elapsed_time_unit', measurement.elapsed === undefined ? '' : ELAPSED_TIME_UNIT], ['observation_date', measurement.observedAt ?? ''], ...experiment.variables.flatMap((variable) => [[variable.name, measurement.values[variable.id] ?? ''], [`${variable.name}_unit`, variable.unit]]),
       ['quality', measurement.quality], ['notes', measurement.notes], ['corrected', measurement.corrections.length ? 'yes' : 'no'],
     ]);
   });
@@ -78,7 +79,7 @@ export function exampleCsv(experiment: Experiment): string {
   return Papa.unparse([{
     specimen: specimen.name,
     run: run.name,
-    [experiment.kind === 'plant' ? 'observation_date' : 'elapsed']: experiment.kind === 'plant' ? '2026-08-17' : '35',
+    [experiment.kind === 'plant' ? 'observation_date' : 'elapsed_minutes']: experiment.kind === 'plant' ? '2026-08-17' : '35',
     value: '',
     unit: variable.unit,
     notes: 'Enter a value; blanks are not converted to zero.',

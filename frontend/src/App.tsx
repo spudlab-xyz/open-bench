@@ -7,6 +7,7 @@ import { NewExperimentPage } from './pages/NewExperimentPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { HistoryPage } from './pages/HistoryPage';
 import { ExperimentPage } from './pages/experiment/ExperimentPage';
 import { RunDetailPage } from './pages/experiment/RunDetailPage';
 
@@ -22,6 +23,7 @@ const router = createBrowserRouter([{
     { path: 'experiments/:id/runs/:runId', element: <RunDetailPage /> },
     { path: 'experiments/:id/:tab?', element: <ExperimentPage /> },
     { path: 'settings', element: <SettingsPage /> },
+    { path: 'history', element: <HistoryPage /> },
     { path: '*', element: <Navigate to="/" replace /> },
   ],
 }]);

@@ -26,6 +26,38 @@ a business API exists. Product records are currently stored in IndexedDB through
 interface. Attachment metadata lives with experiment records and attachment bytes use a separate
 IndexedDB object store. That interface is the future replacement boundary for an API.
 
+The workspace also contains an append-only version ledger. Projects, experiment planning,
+conditions, variables, methods, specimens, runs, measurements, analyses, notes, attachment metadata,
+and other persisted records receive an initial version and immutable snapshots for subsequent
+changes or deletion tombstones. User changes require a reason; deterministic application actions
+record a specific system reason. The active records remain separate from this audit history so a
+deleted item does not silently reappear in operational views.
+
+Stored date-times are ISO instants with an explicit offset or `Z`. The interface renders them with
+both UTC offset and the browser's IANA time zone. Elapsed measurement time is stored in minutes and
+variable definitions carry an explicit unit; `dimensionless` is a deliberate unit value rather than
+an omitted one.
+
+Workspace schema v3 adds experiment-owned scientific records for observation sources and permission
+review, instruments, calibration, retained imports, explicit missing observations, validation
+evidence, scientific review, conclusion evidence, and report releases. Existing records migrate
+with `legacy-unknown` acquisition context and unvalidated method status rather than fabricated
+provenance. Derived analyses retain a reproducibility manifest and are stale when their source data
+revision differs from the current experiment.
+
+Workspace schema v4 separates immutable procedure revisions from independently versioned method-
+validation assessments. Assessments target explicit method revision IDs and retain a normalized
+procedure fingerprint, decision, reviewer, evidence, intended use, limitations, timing, rationale,
+and retrospective status. Validation may cover multiple revisions only after explicit selection and
+only when their procedure fingerprints match. Legacy embedded validation migrates to an assessment
+for that exact revision; it is never silently propagated to an earlier revision. Run method links
+become immutable once measurements exist.
+
+The complete browser archive is a JSON envelope containing the full workspace and append-only
+ledger plus base64 attachment bytes with SHA-256 hashes. Its manifest reports integrity issues and
+omissions before transfer. This is a prototype backup/exchange concept, not a server-side retention
+or records-management guarantee.
+
 ## Backend direction
 
 The backend begins as one application in one Maven module because there are no domain boundaries

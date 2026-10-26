@@ -29,4 +29,12 @@ describe('statistical calculations', () => {
     expect(outcomes.some((item) => item.specimenId === 'thermal-assembly-3-2')).toBe(false);
     expect(thermal.measurements).toHaveLength(before);
   });
+
+  it('does not include observations explicitly marked invalid', () => {
+    const thermal = createSeedWorkspace().experiments[0];
+    const settings = { ...thermal.analyses[0].settings, selectedPoint: 30 };
+    const target = thermal.measurements.find((measurement) => measurement.elapsed === 30)!;
+    target.quality = 'invalid';
+    expect(calculateOutcomes(thermal, settings).some((outcome) => outcome.specimenId === target.specimenId)).toBe(false);
+  });
 });

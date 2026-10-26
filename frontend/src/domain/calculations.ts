@@ -59,7 +59,7 @@ export function calculateOutcomes(experiment: Experiment, settings: AnalysisSett
     // One outcome per physical specimen. A repeated cycle/run is not treated as another independent specimen.
     const run = candidateRuns.sort((left, right) => (left.cycle ?? 1) - (right.cycle ?? 1))[0];
     if (!run) continue;
-    const readings = experiment.measurements.filter((measurement) => measurement.specimenId === specimen.id && measurement.runId === run.id && passesFilters(measurement, settings) && !excluded.has(measurement.id));
+    const readings = experiment.measurements.filter((measurement) => measurement.specimenId === specimen.id && measurement.runId === run.id && measurement.quality !== 'invalid' && passesFilters(measurement, settings) && !excluded.has(measurement.id));
     const end = readings.find((measurement) => pointOf(measurement) === settings.selectedPoint);
     const endValue = end?.values[settings.variableId];
     if (typeof endValue !== 'number') continue;
@@ -85,4 +85,14 @@ export function summariseByCondition(experiment: Experiment, settings: AnalysisS
       const values = outcomes.filter((outcome) => outcome.conditionId === condition.id);
       return { conditionId: condition.id, conditionName: condition.name, colour: condition.colour, values, stats: calculateStats(values.map((outcome) => outcome.value)) };
     });
+}
+
+export function analysisMeasurementIds(experiment: Experiment, settings: AnalysisSettings, excludedIds: string[] = []): string[] {
+  const excluded = new Set(excludedIds);
+  const selected = new Set<number | string | undefined>([settings.selectedPoint]);
+  if (settings.comparison === 'change') selected.add(settings.baselinePoint);
+  return experiment.measurements
+    .filter((measurement) => measurement.quality !== 'invalid' && passesFilters(measurement, settings) && !excluded.has(measurement.id) && selected.has(pointOf(measurement)))
+    .map((measurement) => measurement.id)
+    .sort();
 }

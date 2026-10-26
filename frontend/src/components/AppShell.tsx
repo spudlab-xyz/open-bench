@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, FlaskConical, FolderKanban, Home, Menu } from 'lucide-react';
+import { ChevronLeft, ChevronRight, FlaskConical, FolderKanban, History, Home, Menu } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useWorkspace } from '../context/WorkspaceContext';
@@ -7,6 +7,7 @@ const navigation = [
   { to: '/', label: 'Home', icon: Home, end: true },
   { to: '/projects', label: 'Projects', icon: FolderKanban },
   { to: '/experiments', label: 'Experiments', icon: FlaskConical },
+  { to: '/history', label: 'History', icon: History },
 ];
 
 export function AppShell() {

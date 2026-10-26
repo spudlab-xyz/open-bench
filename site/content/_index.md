@@ -16,7 +16,7 @@ features:
     title: Organised investigations
     text: Group experiments into projects while keeping each experiment's question, conditions, specimens, methods, and progress visible.
     url: docs/using-openbench/workflows/
-  - icon: history
+  - icon: file-clock
     title: Traceable records
     text: Keep method revisions, procedure runs, measurements, quality flags, corrections, notes, and attachments in their scientific context.
     url: docs/using-openbench/workflows/
@@ -26,7 +26,7 @@ features:
     url: docs/using-openbench/workflows/
 stepsEyebrow: Try the current prototype
 stepsTitle: From workspace to first reading
-stepsIntro: OpenBench currently runs as a local exploratory application. Three deterministic example experiments make the workflow available immediately.
+stepsIntro: OpenBench currently runs as a local exploratory application. Four deterministic example experiments make the workflow available immediately.
 steps:
   - title: Start the stack
     text: Run the containerised frontend, operational backend, and MySQL service with Docker Compose.

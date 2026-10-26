@@ -8,6 +8,8 @@ import type {
   Specimen,
   Workspace,
 } from '../types';
+import { initialiseVersionHistory } from '../domain/versioning';
+import { upgradeScientificWorkspace } from '../domain/scientific';
 
 const createdAt = '2026-09-12T09:00:00.000Z';
 export const SEED_VERSION = 3;
@@ -290,13 +292,14 @@ function surfaceHeatingExperiment(): Experiment {
 
 export function createSeedWorkspace(): Workspace {
   const experiments = [thermalExperiment(), surfaceHeatingExperiment(), batteryExperiment(), plantExperiment()];
-  return {
-    schemaVersion: 1,
+  return initialiseVersionHistory(upgradeScientificWorkspace({
+    schemaVersion: 4,
     seedVersion: SEED_VERSION,
     projects,
     experiments,
     savedMethods: experiments.map((item) => item.methodRevisions[0]),
-  };
+    versionHistory: [],
+  }));
 }
 
 export function upgradeSeedWorkspace(workspace: Workspace): Workspace {
@@ -328,10 +331,11 @@ export function upgradeSeedWorkspace(workspace: Workspace): Workspace {
       }],
     };
   });
-  return {
+  return initialiseVersionHistory({
     ...workspace,
+    schemaVersion: 4,
     seedVersion: SEED_VERSION,
     projects: upgradedProjects,
     experiments,
-  };
+  });
 }
